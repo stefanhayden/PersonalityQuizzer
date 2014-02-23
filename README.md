@@ -63,7 +63,7 @@ Add One result for each
 
 Add these temnplates to the HTML
 
-```html
+```Handlebars
 	<script id="quiz_template" type="text/x-handlebars-template">
 	<div class="quiz">
 		<div class="questions">
