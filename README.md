@@ -1,13 +1,33 @@
-PersonalityQuizer
+PersonalityQuizer - v0.01
 =================
 
 A simple API to quickly create a Personality quiz.
 
-Requires: jQuery, Handlebarsjs
+Requires: <a href="http://jquery.com/">jQuery</a>, <a href="handlebarsjs.com">Handlebarsjs</a>
 
 
+include libraries
+
+```html
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+	<script type="text/javascript" src="https://raw.github.com/stefanhayden/PersonalityQuizer/master/PersonalityQuizer.js"></script>
+```
+
+Start new PersonalityQuizer object 
+
+```javascript
 	var quiz = new Quiz();
+```
+
+Add Title
+```javascript
 	quiz.setTitle("What Number are you?")
+```
+
+Add as many questions as needed. Enter 1 answer option for each result you plan on having.
+
+```javascript
 	quiz.addQuestion({ 
 		color: "#7FD863",
 		title: "Pick a Number",
@@ -24,7 +44,11 @@ Requires: jQuery, Handlebarsjs
 			},
 		]
 	});
+```
 
+Add One result for each 
+
+```javascript
 	quiz.addResults([
 		{
 			id: 1,
@@ -35,10 +59,11 @@ Requires: jQuery, Handlebarsjs
 			text: "You're a Number 2"
 		},
 	]);
-
+```
 
 Add these temnplates to the HTML
 
+```html
 	<script id="quiz_template" type="text/x-handlebars-template">
 	<div class="quiz">
 		<div class="questions">
@@ -89,3 +114,4 @@ Add these temnplates to the HTML
 			</div>
 		{{/each}}
 	</script>
+```
