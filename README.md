@@ -61,7 +61,7 @@ Add One result for each
 	]);
 ```
 
-Add these temnplates to the HTML
+Add these Handlebar templates to the HTML
 
 ```Handlebars
 	<script id="quiz_template" type="text/x-handlebars-template">
