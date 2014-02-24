@@ -1,4 +1,4 @@
-var Quiz =(function($, Handlebars, window, document){
+var PersonalityQuizer =(function($, Handlebars, window, document){
 	'use strict';
 
 	var element = $("<div>");

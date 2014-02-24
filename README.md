@@ -17,8 +17,19 @@ include libraries
 Start new PersonalityQuizer object 
 
 ```javascript
-	var quiz = new Quiz();
+	var quiz = new PersonalityQuizer();
 ```
+
+## API for PersonalityQuizer() objects
+
+Parameter | Values | Default | Notes
+----------------------------------------
+setTitle | text | - | sets a name. Mainly for reference in the templates
+addQuestions | array | - | an array of question objects
+addQuestion | object | - | a question object
+addResults | array | - | an array of result objects
+addResult | object | - | a result object
+
 
 Add Title
 ```javascript
