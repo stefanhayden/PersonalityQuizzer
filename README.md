@@ -26,7 +26,7 @@ Parameter | Values | Default | Notes
 ---------- | --------- | -------- | -------------
 setTitle | text | - | sets a name. Mainly for reference in the templates
 addQuestions | array | - | an array of question objects
-addQuestion | object | - | a <a href="#question_object">question object</a>
+addQuestion | object | - | a <a href="#api-for-personalityquizer-objects">question object</a>
 addResults | array | - | an array of result objects
 addResult | object | - | a result object
 render | - | - | force quiz to render
