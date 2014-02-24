@@ -26,15 +26,14 @@ Parameter | Values | Default | Notes
 ---------- | --------- | -------- | -------------
 setTitle | text | - | sets a name. Mainly for reference in the templates
 addQuestions | array | - | an array of question objects
-addQuestion | object | - | a question object
+addQuestion | object | - | a <a href="#question_object">question object</a>
 addResults | array | - | an array of result objects
 addResult | object | - | a result object
+render | - | - | force quiz to render
 
 
-Add Title
-```javascript
-	quiz.setTitle("What Number are you?")
-```
+## Anatomy of a Question Object
+<a id="question_object"></a>
 
 Add as many questions as needed. Enter 1 answer option for each result you plan on having.
 
