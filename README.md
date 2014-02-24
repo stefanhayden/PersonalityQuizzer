@@ -23,7 +23,7 @@ Start new PersonalityQuizer object
 ## API for PersonalityQuizer() objects
 
 Parameter | Values | Default | Notes
-----------------------------------------
+---------- | --------- | -------- | -------------
 setTitle | text | - | sets a name. Mainly for reference in the templates
 addQuestions | array | - | an array of question objects
 addQuestion | object | - | a question object
