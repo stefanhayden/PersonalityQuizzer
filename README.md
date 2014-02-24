@@ -26,14 +26,13 @@ Parameter | Values | Default | Notes
 ---------- | --------- | -------- | -------------
 setTitle | text | - | sets a name. Mainly for reference in the templates
 addQuestions | array | - | an array of question objects
-addQuestion | object | - | a <a href="#api-for-personalityquizer-objects">question object</a>
-addResults | array | - | an array of result objects
+addQuestion | object | - | a <a href="#anatomy-of-a-question-object">question object</a>
+addResults | array | - | an array of <a href="#anatomy-of-a-result-object">result objects</a>
 addResult | object | - | a result object
 render | - | - | force quiz to render
 
 
 ## Anatomy of a Question Object
-<a id="question_object"></a>
 
 Add as many questions as needed. Enter 1 answer option for each result you plan on having.
 
@@ -56,7 +55,8 @@ Add as many questions as needed. Enter 1 answer option for each result you plan 
 	});
 ```
 
-Add One result for each 
+
+## Anatomy of a Result Object
 
 ```javascript
 	quiz.addResults([
