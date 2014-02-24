@@ -36,8 +36,12 @@ render | - | - | force quiz to render
 
 Add as many questions as needed. Enter 1 answer option for each result you plan on having.
 
+Each question must have an array of answer objects. Each answer object must have a result id that corisponds with the result object. The score is used to weight different answers in favor of diferent results.
+
+all other attributes are not required but will be passed to the template.
+
 ```javascript
-	quiz.addQuestion({ 
+	{ 
 		color: "#7FD863",
 		title: "Pick a Number",
 		answers: [
@@ -52,23 +56,21 @@ Add as many questions as needed. Enter 1 answer option for each result you plan 
 				score: 1 
 			},
 		]
-	});
+	}
 ```
 
 
 ## Anatomy of a Result Object
 
+each result object must have an id that will be used in reference by <a href="#anatomy-of-a-question-object">question object</a>.
+
+All other attributes are not required but will be passed to the template.
+
 ```javascript
-	quiz.addResults([
-		{
-			id: 1,
-			text: "You're a number 1"
-		},
-		{
-			id: 2,
-			text: "You're a Number 2"
-		},
-	]);
+	{
+		id: 1,
+		text: "You're a number 1"
+	}
 ```
 
 Add these Handlebar templates to the HTML
