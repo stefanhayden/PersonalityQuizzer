@@ -4,7 +4,9 @@
 
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+	<script type="text/javascript" src="vendor/dombars.min.js"></script>
+
 
 </head>
 <body>
@@ -135,34 +137,48 @@
 
 	</style>
 
-<script id="quiz_template" type="text/x-handlebars-template">
+<script id="quiz_templateOFF" type="text/x-handlebars-template">
 <div class="quiz">
-	<div class="questions">
-		{{#each questions}}
-			{{>question}}
-		{{/each}}
-	</div>
-	<div class="results">
-		{{> result}}
-	</div>
+
+    <div class="questions">
+        {{#each questions}}
+            {{> question}}
+        {{/each}}
+    </div>
+    <div class="results">
+        {{> result}}
+    </div>
 </div>
 </script>
 
+<script id="quiz_template" type="text/x-handlebars-template">
+<div class="quiz">
+
+    <div class="questions">
+        {{{outlet 'questions'}}}
+    </div>
+    <div class="results">
+        {{{outlet 'results'}}}
+    </div>
+</div>
+</script>
+
+
 <script id="question_template" type="text/x-handlebars-template">
-	<div class="question">
+	<div class="question" >
 		<h1 style="background:{{color}}">{{{title}}}</h1>
 		<div class="answers">
-				{{> answer }}
+				{{{outlet 'answers'}}}
 		</div>
 	</div>
 </script>
 
 <script id="answer_template" type="text/x-handlebars-template">
-	{{#each answers}}
-	<div class="answer" data-result="{{result}}" data-score="{{score}}">
+	
+	<div class="answer" data-result="{{result}}" >
 		<div class="wrapper">
 		<div class="table">
-			<div class="text" style="background:{{../color}}">
+			<div class="text" style="background:{{color}}">
 				{{text}}
 			</div>
 		</div>
@@ -171,7 +187,7 @@
 			<div class="checkbox"></div>
 		</div>
 	</div>
-	{{/each}}
+	
 </script>
 
 <script id="result_template" type="text/x-handlebars-template">
@@ -186,11 +202,14 @@
 	{{/each}}
 </script>
 
+<script id="test" type="text/x-handlebars-template">
+	<h1>title - {{title}}</h1>
+</script>
 
 <script type="text/javascript" src="PersonalityQuizer.js"></script>
 
 <script type="text/javascript">
-	var quiz = new Quiz();
+	var quiz = new PersonalityQuizer();
 	quiz.setTitle("What Number are you?")
 	quiz.addQuestion({ 
 		color: "#7FD863",
@@ -251,6 +270,11 @@
 			text: "You're a Number 2"
 		},
 	]);
+
+
+
+
+
 
 </script>
 

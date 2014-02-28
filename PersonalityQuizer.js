@@ -1,12 +1,92 @@
-var PersonalityQuizer =(function($, Handlebars, window, document){
+var PersonalityQuizer =(function($, DOMBars, window, document){
 	'use strict';
 
+	var Model = function(options) {
+
+		var model = function(data) {
+			this.data = data || {};
+
+			this.on("change:$el", function(e, v){ 
+				
+			});
+
+		};
+
+		/* Mixin Class */
+		var Mixin = function(){};
+		Mixin.prototype = {
+			set: function(key, value) {
+				this.data[key] = value;
+				$(this).trigger("change:"+key, value);
+			},
+			get: function(key) {
+				return this.data[key];
+			},
+			on: function(e, f) {
+				$(this).on(e, f);
+			},
+			off: function(e, f) {
+				$(this).off(e, f);
+			}
+		};
+
+		$.extend(model.prototype, Mixin.prototype, options);
+
+		return model;
+
+	}
+	
+	var quizModel = Model();
+	var questionModel = Model();
+	var answerModel = Model({
+		events: {
+			"click .answer": function(e) {
+
+				console.log(e.data.model.get("score"))
+			}
+		}
+	});
+	var resultModel = Model();
+
+	DOMBars.registerHelper('outlet', function actionHelper(name) {
+		var models = this.get(name);
+		if(models) {
+			var el = document.createElement("div");
+			$.each(models, function(i,v){
+				var t = $("<div />").append(v.get("$el"));
+
+				if(v.events) {
+					$.each(v.events, function(ii,vv){
+						var breakAt = ii.indexOf(" ");
+						var selector = ""
+						var eventName = ""
+						if(breakAt) {
+							eventName = ii.substring(0,breakAt);
+							selector = ii.substring(breakAt, ii.length)
+						} else {
+							eventName = ii;
+						}
+						$(t).on(eventName, selector, { model: v}, vv)
+					});
+				}
+				$(el).append(t);
+			
+			});
+
+			
+			return el;
+		}
+		
+		
+	  });
+
+
 	var element = $("<div>");
-	var quiz = {
-		title: "",
-		questions: [],
-		results: []
-	};
+	var quiz = new quizModel({
+			title: "",
+			questions: [],
+			results: []
+		});
 
 	var defaults = {
 		append: "body",
@@ -19,7 +99,7 @@ var PersonalityQuizer =(function($, Handlebars, window, document){
 	}
 	var settings = {};
 
-	var templates = {}
+	var templates = {};
 
 	function shuffle(array) {
 		var currentIndex = array.length
@@ -91,15 +171,16 @@ var PersonalityQuizer =(function($, Handlebars, window, document){
 
 	function render() {
 		element.find(">").remove();
-		element.append($(templates.quiz(quiz)));
+		var t = templates.quiz(quiz);
+		element.append(t);
 
-		$(element).on("click.quiz",".answer", function(){
-			var question = $(this).parents(".question")
-			$(question).find(".answer").removeClass("selected");
-			$(question).data("result", $(this).data("result"));
-			$(this).addClass("selected");
-			checkResult();
-		})
+		// $(element).on("click.quiz",".answer", function(){
+		// 	var question = $(this).parents(".question")
+		// 	$(question).find(".answer").removeClass("selected");
+		// 	$(question).data("result", $(this).data("result"));
+		// 	$(this).addClass("selected");
+		// 	checkResult();
+		// });
 
 		$(settings.append).append(element);
 	}
@@ -108,28 +189,38 @@ var PersonalityQuizer =(function($, Handlebars, window, document){
 		var data = data || {};
 		settings = $.extend( {}, defaults, data.options );
 
-		templates.quiz = Handlebars.compile($(settings.quiz_template).html());
-		templates.question = Handlebars.compile($(settings.question_template).html());
-		templates.answer = Handlebars.compile($(settings.answer_template).html());
-		templates.result = Handlebars.compile($(settings.result_template).html());
+		templates.quiz = DOMBars.compile($(settings.quiz_template).html());
+		templates.question = DOMBars.compile($(settings.question_template).html());
+		templates.answer = DOMBars.compile($(settings.answer_template).html());
+		templates.result = DOMBars.compile($(settings.result_template).html());
 
-    	Handlebars.registerPartial("question", templates.question);
-    	Handlebars.registerPartial("answer", templates.answer);
-    	Handlebars.registerPartial("result", templates.result);
+    	DOMBars.registerPartial("question", templates.question);
+    	DOMBars.registerPartial("answer", templates.answer);
+    	DOMBars.registerPartial("result", templates.result);
+
+		DOMBars.get = function (object, property) {
+			return object.get(property);
+		};
+		DOMBars.subscribe = function (object, property, callback) {
+			object.on('change:' + property, callback);
+		};
+		DOMBars.unsubscribe = function (object, property, callback) {
+			object.off('change:' + property, callback);
+		};
 
 		if(data.questions) {
-			quiz.questions = data.questions;
+			quiz.set("questions", data.questions);
 		}
 
 		if(data.results) {
-			quiz.results = data.results;
+			quiz.set("results",data.results);
 		}
 	}
 
 	out.prototype.quiz_data = quiz;
 
 	out.prototype.setTitle = function(title) {
-		quiz.title = title;
+		quiz.set("title", title);
 		queueRender();
 	} 
 
@@ -140,10 +231,21 @@ var PersonalityQuizer =(function($, Handlebars, window, document){
 		})
 	}
 	out.prototype.addQuestion = function(question) {
-		if(question.answers) {
-			shuffle(question.answers)
+		var answers = [];
+		$.each(question.answers, function(i, v){
+			var a = new answerModel(v);
+			a.set("$el",templates.answer(a))
+			answers.push(a)
+		})
+		if(question.answers && settings.shuffle) {
+			shuffle(answers)
 		}
-		quiz.questions.push(question);
+		question.answers = answers;
+		var questions = quiz.get("questions");
+		var q = new questionModel(question);
+		q.set("$el", templates.question(q));
+		questions.push(q);
+		quiz.set("questions", questions);
 		queueRender();
 	}
 
@@ -153,8 +255,12 @@ var PersonalityQuizer =(function($, Handlebars, window, document){
 			_this.addResult(v);
 		})
 	}
-	out.prototype.addResult = function(result) {
-		quiz.results.push(result);
+	out.prototype.addResult = function(result) {	
+		var results = quiz.get("results");
+		var r = new resultModel(result);
+		r.set("$el", templates.result(r));
+		results.push(r);
+		quiz.set("results",results)
 		queueRender();
 	}
 
@@ -166,4 +272,4 @@ var PersonalityQuizer =(function($, Handlebars, window, document){
 	return out;
 
 
-})(jQuery, Handlebars, window, document);
+})(jQuery, DOMBars, window, document);
