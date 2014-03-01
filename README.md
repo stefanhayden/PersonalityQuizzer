@@ -26,7 +26,7 @@ Parameter | Values | Default | Notes
 ---------- | --------- | -------- | -------------
 setTitle | text | - | sets a name. Mainly for reference in the templates
 addQuestions | array | - | an array of question objects
-addQuestion | object | - | a <a href="#anatomy-of-a-question-object">question object</a> with child <a href="#anatomy-of-a-answer-object">answer objects</a>
+addQuestion | object | - | a <a href="#anatomy-of-a-question-object">question object</a> with child <a href="#anatomy-of-an-answer-object">answer objects</a>
 addResults | array | - | an array of <a href="#anatomy-of-a-result-object">result objects</a>
 render | - | - | force quiz to render
 
