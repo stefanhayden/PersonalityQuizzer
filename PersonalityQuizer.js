@@ -62,7 +62,6 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 				answers[answer.get("result")] = answers[answer.get("result")] || 0;
 				answers[answer.get("result")] += answer.get("score");
 			});
-				console.log(answers)
 
 			var winnerId;
 			var topScore = 0;
@@ -302,6 +301,7 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 		var results = quiz.get("results");
 		var r = new resultModel(result);
 		r.set("el", templates.result(r));
+		r.set("parent", quiz);
 		results.push(r);
 		quiz.set("results",results)
 		queueRender();
