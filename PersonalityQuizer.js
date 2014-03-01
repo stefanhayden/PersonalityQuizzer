@@ -77,6 +77,8 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 				this.showResult(winnerId);
 			}
 
+			this.set("done", true)
+
 		},
 		showResult: function(resultId) {
 			var result = $(this.get("results")).filter(function(){
@@ -107,12 +109,14 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 		},
 		events: {
 			"click >": function(e) {
-				var answers = e.data.model.get("parent").get("answers");
-				$.each(answers, function(i,v){
-					v.set("selected", false)
-				})
-				e.data.model.set("selected", true);
-				$(e.data.model.get("parent")).trigger("answered");
+				if(!quiz.get("done")) {
+					var answers = e.data.model.get("parent").get("answers");
+					$.each(answers, function(i,v){
+						v.set("selected", false)
+					})
+					e.data.model.set("selected", true);
+					$(e.data.model.get("parent")).trigger("answered");
+				}
 			}
 		}
 	});
