@@ -85,6 +85,11 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 			})[0];
 			
 			result.set("selected", true);
+			var el = result.get("el");
+
+			$(document.body).animate({
+				scrollTop: $(el).offset().top
+			}, 2000);
 		}
 	});
 	var questionModel = Model({
@@ -126,7 +131,7 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 		if(models) {
 			var el = document.createElement("div");
 			$.each(models, function(i,v){
-				var t = $("<div />").append(v.get("el"));
+				var t = v.get("el");
 
 				if(v.events) {
 					$.each(v.events, function(ii,vv){
@@ -263,7 +268,7 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 		var answers = [];
 		$.each(question.answers, function(i, v){
 			var a = new answerModel(v);
-			a.set("el",templates.answer(a))
+			a.set("el",$("<div />").append(templates.answer(a)))
 			answers.push(a)
 		})
 		if(settings.shuffle) {
@@ -278,7 +283,7 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 		})
 
 		var questions = quiz.get("questions");
-		q.set("el", templates.question(q));
+		q.set("el", $("<div />").append(templates.question(q)));
 		questions.push(q);
 		quiz.set("questions", questions);
 		queueRender();
@@ -293,7 +298,7 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 	out.prototype.addResult = function(result) {	
 		var results = quiz.get("results");
 		var r = new resultModel(result);
-		r.set("el", templates.result(r));
+		r.set("el", $("<div />").append(templates.result(r)));
 		r.set("parent", quiz);
 		results.push(r);
 		quiz.set("results",results)
