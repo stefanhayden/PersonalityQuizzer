@@ -20,7 +20,7 @@ Start new PersonalityQuizer object and fit it with quiz data:
 
 ```javascript
 	var quiz = new PersonalityQuizer();
-	quiz.setTitle("What kind of Git Repo are you?")
+	quiz.set("title","What kind of Git Repo are you?")
 	quiz.addQuestion({ 
 		color: "#7FD863",
 		title: "Tabs or Spaces?",

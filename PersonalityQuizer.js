@@ -253,13 +253,6 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 		queueRender();
 	}
 
-	//out.prototype.quiz_data = quiz;
-
-	out.prototype.setTitle = function(title) {
-		quiz.set("title", title);
-		queueRender();
-	} 
-
 	out.prototype.addQuestions = function(questions) {
 		var _this = this;
 		$.each(questions, function(i, v){
