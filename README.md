@@ -26,50 +26,50 @@ Parameter | Values | Default | Notes
 ---------- | --------- | -------- | -------------
 setTitle | text | - | sets a name. Mainly for reference in the templates
 addQuestions | array | - | an array of question objects
-addQuestion | object | - | a <a href="#question_object">question object</a> with child <a href="#answer_object">answer objects</a>
-addResults | array | - | an array of result objects
-addResult | object | - | a result object
+addQuestion | object | - | a <a href="#anatomy-of-a-question-object">question object</a> with child <a href="#anatomy-of-a-answer-object">answer objects</a>
+addResults | array | - | an array of <a href="#anatomy-of-a-result-object">result objects</a>
 render | - | - | force quiz to render
 
 
 ## Anatomy of a Question Object
-<a id="question_object"></a>
 
 Add as many questions as needed. Enter 1 answer option for each result you plan on having.
 
+Each question must have an array of answer objects. Each answer object must have a result id that corisponds with the result object. The score is used to weight different answers in favor of diferent results.
+
+all other attributes are not required but will be passed to the template.
+
 ```javascript
-quiz.addQuestion({ 
+{ 
 	color: "#7FD863",
 	title: "Pick a Number",
 	answers: [ /* answer object */ ]
-});
+};
 ```
 
 
 ## Anatomy of an Answer Object
-<a id="answer_object"></a>
 
 ```javascript
 { 
 	text: "Like a baby",
 	result: 1,
-	score: 1 
+	score: 1 /* optional */
 }
 ```
 
-Add One result for each 
+
+## Anatomy of a Result Object
+
+each result object must have an id that will be used in reference by <a href="#anatomy-of-a-question-object">question object</a>.
+
+All other attributes are not required but will be passed to the template.
 
 ```javascript
-quiz.addResults([
-	{
-		id: 1,
-		text: "You're a number 1"
-	},
-	{
-		id: 2,
-		text: "You're a Number 2"
-	},
-]);
+{
+	id: 1,
+	text: "You're a number 1"
+}
 ```
 
 Add these DOMBars templates to the HTML. Be sure to include the 3 outlet helpers for questions, answers and results.
@@ -123,6 +123,4 @@ Add these DOMBars templates to the HTML. Be sure to include the 3 outlet helpers
 			</div>
 		</div>
 </script>
-
-
 ```
