@@ -150,7 +150,7 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 		}
 		
 		
-	  });
+	});
 
 
 	var element = $("<div>");
