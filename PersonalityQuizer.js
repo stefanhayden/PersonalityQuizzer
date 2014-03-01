@@ -1,18 +1,18 @@
-var PersonalityQuizer =(function($, DOMBars, window, document){
+var PersonalityQuizer = (function($, DOMBars, window, document){
 	'use strict';
 
 	var Model = function(options) {
+		var options = options || {};
 
 		var model = function(data) {
 			this.data = data || {};
 
-			this.on("change:$el", function(e, v){ 
-				
-			});
+			if(options.init) {
+				options.init.call(this);
+			}
 
 		};
 
-		/* Mixin Class */
 		var Mixin = function(){};
 		Mixin.prototype = {
 			set: function(key, value) {
@@ -36,13 +36,83 @@ var PersonalityQuizer =(function($, DOMBars, window, document){
 
 	}
 	
-	var quizModel = Model();
-	var questionModel = Model();
-	var answerModel = Model({
-		events: {
-			"click .answer": function(e) {
+	var quizModel = Model({
+		init: function(){
+			var _this = this;
+			this.on("answered", function(){
+				if(_this.checkAnswered()) {
+					_this.calculateResult();
+				}
+			})
+		},
+		checkAnswered: function() {
+			var length = this.get("questions").length;
+			var answers = $(this.get("questions")).filter(function(){
+				return this.getAnswer();
+			}).length;
 
-				console.log(e.data.model.get("score"))
+			return length === answers;
+		},
+		calculateResult: function() {
+			var _this = this;
+			var answers = {};
+			$.each(this.get("questions"), function(i,v){
+				var answer = v.getAnswer();
+
+				answers[answer.get("result")] = answers[answer.get("result")] || 0;
+				answers[answer.get("result")] += answer.get("score");
+			});
+				console.log(answers)
+
+			var winnerId;
+			var topScore = 0;
+			$.each(answers, function(i,v){
+				if(v >= topScore) {
+					topScore = v;
+					winnerId = i;
+				}
+			})
+
+			if(winnerId) {
+				this.showResult(winnerId);
+			}
+
+		},
+		showResult: function(resultId) {
+			var result = $(this.get("results")).filter(function(){
+				return this.get("id") == resultId;
+			})[0];
+			
+			result.set("selected", true);
+		}
+	});
+	var questionModel = Model({
+		init: function() {
+			var _this = this;
+			this.on("answered", function(){
+				$(_this.get("parent")).trigger("answered");
+			})
+		},
+		getAnswer: function() {
+			return $(this.get("answers")).filter(function(){
+				return this.get("selected");
+			})[0];
+		}
+	});
+	var answerModel = Model({
+		init: function(){
+			if(!this.get("score")) {
+				this.set("score", 1);
+			}
+		},
+		events: {
+			"click >": function(e) {
+				var answers = e.data.model.get("parent").get("answers");
+				$.each(answers, function(i,v){
+					v.set("selected", false)
+				})
+				e.data.model.set("selected", true);
+				$(e.data.model.get("parent")).trigger("answered");
 			}
 		}
 	});
@@ -53,7 +123,7 @@ var PersonalityQuizer =(function($, DOMBars, window, document){
 		if(models) {
 			var el = document.createElement("div");
 			$.each(models, function(i,v){
-				var t = $("<div />").append(v.get("$el"));
+				var t = $("<div />").append(v.get("el"));
 
 				if(v.events) {
 					$.each(v.events, function(ii,vv){
@@ -73,7 +143,6 @@ var PersonalityQuizer =(function($, DOMBars, window, document){
 			
 			});
 
-			
 			return el;
 		}
 		
@@ -123,40 +192,6 @@ var PersonalityQuizer =(function($, DOMBars, window, document){
 		return array;
 	}
 
-	function checkResult() {
-		var questions = $(element).find(".question").length;
-		var selected = $(element).find(".question").filter(function(){
-			return typeof $(this).data("result") !== "undefined";
-		}).length;
-
-		if(questions === selected) {
-			$(element).unbind("click.quiz");
-			setResult();
-		}
-	}
-
-	function setResult() {
-		var results = [];
-		$(element).find(".result").each(function(){
-			var result = $(this).data("final-result");
-			var selected = $(element).find(".question").filter(function(){
-				return $(this).data("result") == result;
-			}).length
-			results.push([ $(this).data("final-result"), selected ])
-		})
-		results.sort(function(a, b) {
-			return b[1] - a[1]
-		});
-		
-		var final_result = $(element).find(".result").filter(function(){
-			return $(this).data("final-result") == results[0][0];
-		});
-
-		if(final_result.length) {
-			final_result.show()
-		}
-
-	}
 
 	function queueRender() {
 		var _this = this;
@@ -173,14 +208,6 @@ var PersonalityQuizer =(function($, DOMBars, window, document){
 		element.find(">").remove();
 		var t = templates.quiz(quiz);
 		element.append(t);
-
-		// $(element).on("click.quiz",".answer", function(){
-		// 	var question = $(this).parents(".question")
-		// 	$(question).find(".answer").removeClass("selected");
-		// 	$(question).data("result", $(this).data("result"));
-		// 	$(this).addClass("selected");
-		// 	checkResult();
-		// });
 
 		$(settings.append).append(element);
 	}
@@ -215,9 +242,15 @@ var PersonalityQuizer =(function($, DOMBars, window, document){
 		if(data.results) {
 			quiz.set("results",data.results);
 		}
+
+		if(data.title) {
+			quiz.set("title", data.title);
+		}
+
+		queueRender();
 	}
 
-	out.prototype.quiz_data = quiz;
+	//out.prototype.quiz_data = quiz;
 
 	out.prototype.setTitle = function(title) {
 		quiz.set("title", title);
@@ -234,16 +267,22 @@ var PersonalityQuizer =(function($, DOMBars, window, document){
 		var answers = [];
 		$.each(question.answers, function(i, v){
 			var a = new answerModel(v);
-			a.set("$el",templates.answer(a))
+			a.set("el",templates.answer(a))
 			answers.push(a)
 		})
-		if(question.answers && settings.shuffle) {
+		if(settings.shuffle) {
 			shuffle(answers)
 		}
 		question.answers = answers;
-		var questions = quiz.get("questions");
 		var q = new questionModel(question);
-		q.set("$el", templates.question(q));
+		q.set("parent", quiz);
+
+		$.each(q.get("answers"),function(i,v) {
+			v.set("parent", q);
+		})
+
+		var questions = quiz.get("questions");
+		q.set("el", templates.question(q));
 		questions.push(q);
 		quiz.set("questions", questions);
 		queueRender();
@@ -258,7 +297,7 @@ var PersonalityQuizer =(function($, DOMBars, window, document){
 	out.prototype.addResult = function(result) {	
 		var results = quiz.get("results");
 		var r = new resultModel(result);
-		r.set("$el", templates.result(r));
+		r.set("el", templates.result(r));
 		results.push(r);
 		quiz.set("results",results)
 		queueRender();
