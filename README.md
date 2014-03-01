@@ -16,10 +16,35 @@ include libraries
 	<script type="text/javascript" src="PersonalityQuizer.js"></script>
 ```
 
-Start new PersonalityQuizer object 
+Start new PersonalityQuizer object and fit it with quiz data:
 
 ```javascript
 	var quiz = new PersonalityQuizer();
+	quiz.setTitle("What kind of Git Repo are you?")
+	quiz.addQuestion({ 
+		color: "#7FD863",
+		title: "Tabs or Spaces?",
+		answers: [
+			{ 
+				text: "Tabs",
+				result: 1
+			},
+			{ 
+				text: "Spaces",
+				result: 2
+			},
+		]
+	});
+	quiz.addResults([
+		{
+			id: 1,
+			text: "You are a Tabs repo!"
+		},
+		{
+			id: 2,
+			text: "You are a spaces repo!"
+		},
+	]);
 ```
 
 ## API for PersonalityQuizer() objects
