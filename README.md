@@ -3,6 +3,8 @@ PersonalityQuizer - v0.02
 
 A simple API to quickly create a Personality quiz.
 
+<a href="http://stefanhayden.github.io/PersonalityQuizer/">Try a simple demo here</a>
+
 Requires: <a href="http://jquery.com/">jQuery</a>, <a href="https://github.com/blakeembrey/dombars">DOMBars</a>
 
 
