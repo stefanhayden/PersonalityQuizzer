@@ -163,7 +163,7 @@
 
 <script id="answer_template" type="text/x-handlebars-template">
 	
-	<div class="answer {{#if selected}}selected{{/if}}" data-result="{{result}}" >
+	<div class="answer {{#if selected}}selected{{/if}}" >
 		<div class="wrapper">
 		<div class="table">
 			<div class="text" style="background:{{parent.color}}">
@@ -181,8 +181,7 @@
 <script id="result_template" type="text/x-handlebars-template">
 		<div class="result {{#if selected}}selected{{/if}}" >
 			<div class="wrapper">
-				<div class="title">{{title}}</div>
-				<img src="" class="mainImage" height="100" width="100">
+				<div class="title">{{parent.title}}</div>
 				<p>{{text}}</p>
 			</div>
 		</div>
@@ -209,7 +208,7 @@
 		]
 	});
 	quiz.addQuestion({ 
-		color: "#7FD863",
+		color: "#63D8B3",
 		title: "Pick a Number",
 		answers: [
 			{ 
@@ -223,7 +222,7 @@
 		]
 	});
 	quiz.addQuestion({ 
-		color: "red",
+		color: "#8463D8",
 		title: "Pick a Number",
 		answers: [
 			{ 
