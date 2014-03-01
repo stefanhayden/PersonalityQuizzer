@@ -311,6 +311,13 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 		queueRender.call(this);		
 	}
 
+	out.prototype.set = function(key, value) {
+		quiz.set(key, value);
+	}
+	out.prototype.get = function(key) {
+		quiz.get(key)
+	}
+
 
 	return out;
 
