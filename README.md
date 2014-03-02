@@ -122,7 +122,7 @@ Other attributes will be passed in to the template.
 }
 ```
 
-Add these DOMBars templates to the HTML. Be sure to include the 3 outlet helpers for questions, answers and results.
+Add these Handelbars templates to the HTML. Though instead of using the Handelbars library we will use the DOMBars library for easy event binding and live updates. Be sure to include the 3 outlet helpers for questions, answers and results. None of the class names or html in the example below are required. Feel free to customize as much as you like!
 
 ```html
 
@@ -149,7 +149,7 @@ Add these DOMBars templates to the HTML. Be sure to include the 3 outlet helpers
 
 <script id="answer_template" type="text/x-handlebars-template">
 	
-	<div class="answer {{#if selected}}selected{{/if}}" data-result="{{result}}" >
+	<div class="answer {{#if selected}}selected{{/if}}" >
 		<div class="wrapper">
 		<div class="table">
 			<div class="text" style="background:{{parent.color}}">
@@ -168,7 +168,6 @@ Add these DOMBars templates to the HTML. Be sure to include the 3 outlet helpers
 		<div class="result {{#if selected}}selected{{/if}}" >
 			<div class="wrapper">
 				<div class="title">{{title}}</div>
-				<img src="" class="mainImage" height="100" width="100">
 				<p>{{text}}</p>
 			</div>
 		</div>
