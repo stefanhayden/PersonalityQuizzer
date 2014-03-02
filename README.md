@@ -75,6 +75,7 @@ append | text | body | this is the css selector that the quiz will be appended t
 quiz_template | text | quiz_template | the id of the template
 question_template | text | question_template | the id of the template
 answer_template | text | answer_template | the id of the template
+result_template | text | result_template | the id of the template
 shuffle | boolean | true | shuffles the question order.
 debounce | number | 10 | stop the template from rerendering to often.
 
