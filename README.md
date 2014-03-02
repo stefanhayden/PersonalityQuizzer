@@ -88,7 +88,7 @@ Other attributes will be passed in to the template.
 ```javascript
 {
 	answers: [ /* answer object */ ] /* required */
-};
+}
 ```
 
 
