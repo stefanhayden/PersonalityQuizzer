@@ -60,7 +60,7 @@ render | - | - | force quiz to render
 ## PersonalityQuizer Options
 ```javascript
 var quiz = new PersonalityQuizer({
-	settings: {
+	options: {
 		append: "body",
 		quiz_template: "#quiz_template",
 		question_template: "#question_template",
