@@ -57,6 +57,26 @@ addQuestion | object | - | a <a href="#anatomy-of-a-question-object">question ob
 addResults | array | - | an array of <a href="#anatomy-of-a-result-object">result objects</a>
 render | - | - | force quiz to render
 
+## PersonalityQuizer Options
+```javascript
+var quiz = new PersonalityQuizer({
+	append: "body",
+	quiz_template: "#quiz_template",
+	question_template: "#question_template",
+	answer_template: "#answer_template",
+	result_template: "#result_template",
+	shuffle: true,
+	debounce: 10,
+});
+```
+Parameter | Values | Default | Notes
+---------- | --------- | -------- | -------------
+append | text | body | this is the css selector that the quiz will be appended to.
+quiz_template | text | quiz_template | the id of the template
+question_template | text | question_template | the id of the template
+answer_template | text | answer_template | the id of the template
+shuffle | boolean | true | shuffles the question order.
+debounce | number | 10 | stop the template from rerendering to often.
 
 ## Anatomy of a Question Object
 
