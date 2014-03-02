@@ -91,7 +91,7 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 			var scrollTo = elOffset - (windowHeight / 3);
 			
 			$(document.body).animate({
-				scrollTop: $(el).offset().top
+				scrollTop: scrollTo
 			}, 2000);
 		}
 	});
