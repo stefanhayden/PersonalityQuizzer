@@ -60,13 +60,17 @@ render | - | - | force quiz to render
 ## PersonalityQuizer Options
 ```javascript
 var quiz = new PersonalityQuizer({
-	append: "body",
-	quiz_template: "#quiz_template",
-	question_template: "#question_template",
-	answer_template: "#answer_template",
-	result_template: "#result_template",
-	shuffle: true,
-	debounce: 10,
+	settings: {
+		append: "body",
+		quiz_template: "#quiz_template",
+		question_template: "#question_template",
+		answer_template: "#answer_template",
+		result_template: "#result_template",
+		shuffle: true,
+		debounce: 10,
+	},
+	questions: [ /* questions objects */ ],
+	results: [ /* result objects */ ],
 });
 ```
 Parameter | Values | Default | Notes
