@@ -86,7 +86,10 @@ var PersonalityQuizer = (function($, DOMBars, window, document){
 			
 			result.set("selected", true);
 			var el = result.get("el");
-
+			var elOffset = $(el).offset().top
+			var windowHeight = $(window).height();
+			var scrollTo = elOffset - (windowHeight / 3);
+			
 			$(document.body).animate({
 				scrollTop: $(el).offset().top
 			}, 2000);
