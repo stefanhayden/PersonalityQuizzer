@@ -60,27 +60,26 @@ render | - | - | force quiz to render
 
 ## Anatomy of a Question Object
 
-Add as many questions as needed. Enter 1 answer option for each result you plan on having.
+Add as many questions as needed. Each question must have an array of <a href="#anatomy-of-an-answer-object">answer object</a>. 
 
-Each question must have an array of answer objects. Each answer object must have a result id that corisponds with the result object. The score is used to weight different answers in favor of diferent results.
-
-all other attributes are not required but will be passed to the template.
+Other attributes will be passed in to the template.
 
 ```javascript
-{ 
-	color: "#7FD863",
-	title: "Pick a Number",
-	answers: [ /* answer object */ ]
+{
+	answers: [ /* answer object */ ] /* required */
 };
 ```
 
 
 ## Anatomy of an Answer Object
 
+Each answer object must have a result id that corisponds with the <a href="#anatomy-of-a-result-object">result objects</a>. The score is used to weight different answers in favor of diferent results.
+
+Other attributes will be passed in to the template.
+
 ```javascript
-{ 
-	text: "Like a baby",
-	result: 1,
+{
+	result: 1, /* required */
 	score: 1 /* optional */
 }
 ```
@@ -88,14 +87,13 @@ all other attributes are not required but will be passed to the template.
 
 ## Anatomy of a Result Object
 
-each result object must have an id that will be used in reference by <a href="#anatomy-of-a-question-object">question object</a>.
+each result object must have an id that will be used in reference by <a href="#anatomy-of-an-answer-object">answer object</a>.
 
-All other attributes are not required but will be passed to the template.
+Other attributes will be passed in to the template.
 
 ```javascript
 {
-	id: 1,
-	text: "You're a number 1"
+	id: 1, /* required */
 }
 ```
 
