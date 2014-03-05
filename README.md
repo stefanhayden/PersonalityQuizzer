@@ -1,9 +1,9 @@
-PersonalityQuizer - v0.02
+PersonalityQuizzer - v0.02
 =================
 
 A simple API to quickly create a Personality quiz.
 
-<a href="http://stefanhayden.github.io/PersonalityQuizer/">Try a simple demo here</a>
+<a href="http://stefanhayden.github.io/PersonalityQuizzer/">Try a simple demo here</a>
 
 Requires: <a href="http://jquery.com/">jQuery</a>, <a href="https://github.com/blakeembrey/dombars">DOMBars</a>
 
@@ -13,13 +13,13 @@ include libraries
 ```html
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="vendor/dombars.min.js"></script>
-	<script type="text/javascript" src="PersonalityQuizer.js"></script>
+	<script type="text/javascript" src="PersonalityQuizzer.js"></script>
 ```
 
-Start new PersonalityQuizer object and fit it with quiz data:
+Start new PersonalityQuizzer object and fit it with quiz data:
 
 ```javascript
-	var quiz = new PersonalityQuizer();
+	var quiz = new PersonalityQuizzer();
 	quiz.set("title","What kind of Git Repo are you?")
 	quiz.addQuestion({ 
 		color: "#7FD863",
@@ -47,7 +47,7 @@ Start new PersonalityQuizer object and fit it with quiz data:
 	]);
 ```
 
-## API for PersonalityQuizer() objects
+## API for PersonalityQuizzer() objects
 
 Parameter | Values | Default | Notes
 ---------- | --------- | -------- | -------------
@@ -57,9 +57,9 @@ addQuestion | object | - | a <a href="#anatomy-of-a-question-object">question ob
 addResults | array | - | an array of <a href="#anatomy-of-a-result-object">result objects</a>
 render | - | - | force quiz to render
 
-## PersonalityQuizer Options
+## PersonalityQuizzer Options
 ```javascript
-var quiz = new PersonalityQuizer({
+var quiz = new PersonalityQuizzer({
 	options: {
 		append: "body",
 		quiz_template: "#quiz_template",
