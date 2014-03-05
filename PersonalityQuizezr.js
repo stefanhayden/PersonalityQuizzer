@@ -1,4 +1,4 @@
-var PersonalityQuizer = (function($, DOMBars, window, document){
+var PersonalityQuizzer = (function($, DOMBars, window, document){
 	'use strict';
 
 	var Model = function(options) {
