@@ -112,13 +112,13 @@ Other attributes will be passed in to the template.
 
 ## Anatomy of a Result Object
 
-each result object must have an id that will be used in reference by <a href="#anatomy-of-an-answer-object">answer object</a>.
+each result object must have an id that will be used in reference by <a href="#anatomy-of-an-answer-object">answer object</a>. This can be a number or array.
 
 Other attributes will be passed in to the template.
 
 ```javascript
 {
-	id: 1, /* required */
+	id: 1, /* required (number | array) */
 }
 ```
 

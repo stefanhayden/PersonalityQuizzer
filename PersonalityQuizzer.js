@@ -58,9 +58,16 @@ var PersonalityQuizzer = (function($, DOMBars, window, document){
 			var answers = {};
 			$.each(this.get("questions"), function(i,v){
 				var answer = v.getAnswer();
+				var result = answer.get("result");
 
-				answers[answer.get("result")] = answers[answer.get("result")] || 0;
-				answers[answer.get("result")] += answer.get("score");
+				if(typeof result == "number") {
+					result = [result];
+				}
+
+				result.forEach(function(r){
+					answers[r] = answers[r] || 0;
+					answers[r] += answer.get("score");
+				})
 			});
 
 			var winnerId;
